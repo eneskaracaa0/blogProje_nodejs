@@ -1,0 +1,40 @@
+//mongodb veri ekleme, arama, listeleme
+app.get("/add", (req, res) => {
+    const newblog = new Blog({
+        title: "Yeni Yazı 2",
+        short: "Kısa Açıklama",
+        long: "Uzun Açıklama",
+    });
+
+    newblog
+        .save()
+        .then((result) => {
+            console.log("Yeni blog kaydedildi:", result);
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+//Databasedeki yazılara erişir
+app.get("/all", (req, res) => {
+    Blog.find()
+        .then((result) => {
+            res.send(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+//Databasedeki tek bir yazıya erişir
+app.get('/single', (req, res) => {
+    Blog.findById("64a008ceb1336829c2f27ee6")
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+})
